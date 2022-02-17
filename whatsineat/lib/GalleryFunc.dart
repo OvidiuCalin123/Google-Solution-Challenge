@@ -1,11 +1,25 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; // For Gallery
-import 'package:google_ml_vision/google_ml_vision.dart'; // For text recognition
+import 'package:image_picker/image_picker.dart'; // For camera
 
-class GalleryButton extends StatelessWidget {
+class GalleryButton extends StatefulWidget {
+  @override
+  _imageGalleryState createState() => _imageGalleryState();
+}
+
+class _imageGalleryState extends State<GalleryButton> {
+  bool imageTaken = false;
+
+  @override
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? photo =
+        await _picker.pickImage(source: ImageSource.gallery, maxWidth: 600);
+
+    setState(() {
+      File _storedImage = File(photo!.path);
+      imageTaken = true;
+    });
   }
 
   Widget build(BuildContext context) {
