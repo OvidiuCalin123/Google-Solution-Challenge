@@ -20,7 +20,7 @@ class _imageCameraState extends State<CameraButton> {
     setState(() {
       File _storedImage = File(photo!.path);
       imageTaken = true;
-      selectPage(context);
+      selectPage(context, 'LoadingScreen');
     });
   }
 

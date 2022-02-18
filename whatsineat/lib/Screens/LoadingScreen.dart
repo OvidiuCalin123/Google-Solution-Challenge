@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:whatsineat/ChangePage.dart';
 
 class LoadingScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.add_alert),
+              tooltip: 'Show Snackbar',
+              onPressed: () {
+                selectPage(context, 'Ingredients');
+              },
+            ),
+          ],
           toolbarHeight: 100, // Changing the size of Appbar
           centerTitle: true, // Centering everything
           title: Text(
