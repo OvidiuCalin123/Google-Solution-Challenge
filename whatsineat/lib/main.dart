@@ -19,15 +19,6 @@ class HomeWidget extends StatelessWidget {
           ),
         ),
         body: Container(
-          decoration: BoxDecoration(
-            //Background code
-            image: DecorationImage(
-              image: NetworkImage(
-                  "https://raw.githubusercontent.com/OvidiuCalin123/ImagesFlutterApp/main/Background.png?token=GHSAT0AAAAAABRPUPUYI6N7SXIWVCMIJCK6YQP3L6A"),
-              fit: BoxFit.cover,
-            ),
-            //End Background code
-          ),
           child: Column(
             children: [
               Row(

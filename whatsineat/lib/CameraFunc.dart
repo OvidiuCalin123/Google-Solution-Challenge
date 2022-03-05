@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
 import 'package:image_picker/image_picker.dart'; // For camera
 import 'package:whatsineat/ChangePage.dart';
 
@@ -9,24 +10,43 @@ class CameraButton extends StatefulWidget {
 }
 
 class _imageCameraState extends State<CameraButton> {
-  bool imageTaken = false;
+  String scannedText = "";
+  bool confirmedPhoto = false;
 
   @override
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? photo =
         await _picker.pickImage(source: ImageSource.camera, maxWidth: 600);
-
-    setState(() {
-      File _storedImage = File(photo!.path);
-      imageTaken = true;
-      selectPage(context, 'LoadingScreen');
+    setState(() async {
+      confirmedPhoto = true;
+      selectPage(context, "LoadingScreen", image: photo);
     });
   }
+
+  // void recognizeText(XFile image) async {
+  //   final inputImage = InputImage.fromFilePath(image.path);
+  //   final textDetector = GoogleMlKit.vision.textDetector();
+  //   RecognisedText recognisedText = await textDetector.processImage(inputImage);
+  //   await textDetector.close();
+  //   scannedText = "";
+
+  //   for (TextBlock block in recognisedText.blocks) {
+  //     for (TextLine line in block.lines) {
+  //       for (TextElement elm in line.elements) {
+  //         scannedText = scannedText +
+  //             "\n" +
+  //             elm.text; // Maybe add to an array each elm.text
+  //       }
+  //     }
+  //   }
+  //   setState(() {});
+  // }
 
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Text(scannedText),
         Container(
           child: Transform.rotate(
             angle: -1.5 / 4,
@@ -37,7 +57,6 @@ class _imageCameraState extends State<CameraButton> {
               ),
               label: Text(""),
               onPressed: () {
-                imageTaken = false;
                 _takePicture();
               },
               style: ButtonStyle(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsineat/Screens/DrawerIngredientsScreen.dart';
-
-import 'package:whatsineat/Screens/TextDescriptionIngredients/DescriptionIngredients.dart';
+import 'package:whatsineat/Screens/TextDescriptionIngredients/Ingredients.dart';
 
 class IngredientsScreenWidget extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -38,11 +37,7 @@ class IngredientsScreenWidget extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Ingredient(),
-              Ingredient(),
-              Ingredient(),
-              Ingredient(),
-              Ingredient(),
+              Ingredients(),
             ],
           ),
         ),

@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart'; // For camera
+import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'ChangePage.dart'; // For camera
 
 class GalleryButton extends StatefulWidget {
   @override
@@ -9,7 +12,7 @@ class GalleryButton extends StatefulWidget {
 
 class _imageGalleryState extends State<GalleryButton> {
   bool imageTaken = false;
-
+  String scannedText = "";
   @override
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
@@ -17,9 +20,29 @@ class _imageGalleryState extends State<GalleryButton> {
         await _picker.pickImage(source: ImageSource.gallery, maxWidth: 600);
 
     setState(() {
-      File _storedImage = File(photo!.path);
+      //selectPage(context, 'LoadingScreen');
+      recognizeText(photo!);
       imageTaken = true;
     });
+  }
+
+  void recognizeText(XFile image) async {
+    final inputImage = InputImage.fromFilePath(image.path);
+    final textDetector = GoogleMlKit.vision.textDetector();
+    RecognisedText recognisedText = await textDetector.processImage(inputImage);
+    await textDetector.close();
+    scannedText = "";
+
+    for (TextBlock block in recognisedText.blocks) {
+      for (TextLine line in block.lines) {
+        for (TextElement elm in line.elements) {
+          scannedText = scannedText +
+              "\n" +
+              elm.text; // Maybe add to an array each elm.text
+        }
+      }
+    }
+    setState(() {});
   }
 
   Widget build(BuildContext context) {
