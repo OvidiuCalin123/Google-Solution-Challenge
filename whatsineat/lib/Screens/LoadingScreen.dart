@@ -18,6 +18,7 @@ class LoadingScreenWidget extends StatefulWidget {
 class _LoadingScreenWidgetState extends State<LoadingScreenWidget> {
   String scannedText = "";
   bool checkScanned = false;
+  String productName = "";
 
   @override
   void recognizeText(XFile image) async {
@@ -44,27 +45,55 @@ class _LoadingScreenWidgetState extends State<LoadingScreenWidget> {
       recognizeText(this.widget.photo);
       checkScanned = true;
     }
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Hello"),
+          title: Text("WhatsInEat"),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (scannedText == "")
-              Text("No text detected")
-            else
-              Text(scannedText),
+            if (scannedText.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.only(top: 80, left: 20, bottom: 15),
+                child: new TextField(
+                  onChanged: (String str) {
+                    productName = str;
+                  },
+                  autofocus: true,
+                  decoration: new InputDecoration(
+                    contentPadding: const EdgeInsets.only(top: 10),
+                    hintText: "Enter product name",
+                  ),
+                ),
+              ),
+            if (scannedText.isNotEmpty)
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if (productName != "")
+                      selectPage(context, "Ingredients",
+                          productName: productName);
+                  });
+                },
+                child: Text("Add"),
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Loading",
-                  style: TextStyle(fontSize: 40),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      if (!scannedText.isNotEmpty)
+                        Text(
+                          "Loading",
+                          style: TextStyle(fontSize: 40),
+                        )
+                    ],
+                  ),
                 )
               ],
             )

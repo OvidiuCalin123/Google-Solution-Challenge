@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:whatsineat/Screens/DrawerIngredientsScreen.dart';
-import 'package:whatsineat/Screens/TextDescriptionIngredients/Ingredients.dart';
+import 'DrawerIngredientsScreen.dart';
+import 'TextDescriptionIngredients/Ingredients.dart';
 
-class IngredientsScreenWidget extends StatelessWidget {
+class IngredientsScreenWidget extends StatefulWidget {
+  var nameOfProduct = "";
+
+  IngredientsScreenWidget(String productName) {
+    nameOfProduct = productName;
+  }
+
+  @override
+  State<IngredientsScreenWidget> createState() =>
+      _IngredientsScreenWidgetState();
+}
+
+class _IngredientsScreenWidgetState extends State<IngredientsScreenWidget> {
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        drawer: NavigationDrawer(),
+        drawer: NavigationDrawer(this.widget.nameOfProduct),
         appBar: AppBar(
           leading: Builder(
             builder: (context) => IconButton(
@@ -23,7 +36,7 @@ class IngredientsScreenWidget extends StatelessWidget {
           title: Column(
             children: [
               Text(
-                "Cipsuri Lays",
+                this.widget.nameOfProduct, //Product name
                 style: TextStyle(fontSize: 30),
               ),
               Text(

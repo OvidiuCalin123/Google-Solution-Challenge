@@ -10,43 +10,21 @@ class CameraButton extends StatefulWidget {
 }
 
 class _imageCameraState extends State<CameraButton> {
-  String scannedText = "";
-  bool confirmedPhoto = false;
-
+  bool test = false;
   @override
   Future<void> _takePicture() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? photo =
         await _picker.pickImage(source: ImageSource.camera, maxWidth: 600);
-    setState(() async {
-      confirmedPhoto = true;
+    if (photo!.path.isNotEmpty) {
+      test = true;
       selectPage(context, "LoadingScreen", image: photo);
-    });
+    }
   }
-
-  // void recognizeText(XFile image) async {
-  //   final inputImage = InputImage.fromFilePath(image.path);
-  //   final textDetector = GoogleMlKit.vision.textDetector();
-  //   RecognisedText recognisedText = await textDetector.processImage(inputImage);
-  //   await textDetector.close();
-  //   scannedText = "";
-
-  //   for (TextBlock block in recognisedText.blocks) {
-  //     for (TextLine line in block.lines) {
-  //       for (TextElement elm in line.elements) {
-  //         scannedText = scannedText +
-  //             "\n" +
-  //             elm.text; // Maybe add to an array each elm.text
-  //       }
-  //     }
-  //   }
-  //   setState(() {});
-  // }
 
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(scannedText),
         Container(
           child: Transform.rotate(
             angle: -1.5 / 4,

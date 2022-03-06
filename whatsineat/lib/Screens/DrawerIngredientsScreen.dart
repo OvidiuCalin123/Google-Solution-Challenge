@@ -3,6 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:whatsineat/ChangePage.dart';
 
 class NavigationDrawer extends StatelessWidget {
+  String productName = "";
+
+  NavigationDrawer(String prdName) {
+    productName = prdName;
+  }
+
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -33,7 +39,7 @@ class NavigationDrawer extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             onTap: () {
-              Navigator.pop(context);
+              selectPage(context, "Products", productName: productName);
             },
           ),
           ListTile(
